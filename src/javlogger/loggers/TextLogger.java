@@ -3,6 +3,9 @@ package javlogger.loggers;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javlogger.utils.JaVlogger;
 
@@ -10,7 +13,7 @@ public class TextLogger extends JaVlogger {
     private String path = null;
 
     public TextLogger(String path) {
-        this.path = path;
+        this.path = Paths.get(path, getLoggerName()).toString();
     }
 
     public String getPath() {
@@ -21,15 +24,16 @@ public class TextLogger extends JaVlogger {
         this.path = path;
     }
 
-    @Override
-    public void log(String message) {
-        message = formatLog(message);
-        if (path == null) {
-            throw new RuntimeException("Path is not set");
-        }
+    public String getLoggerName() {
+        String currentYearMonthDayAndHour = new SimpleDateFormat("yyyy-MM-dd_HH_mm")
+                .format(Calendar.getInstance().getTime());
+        return "javlogger." + currentYearMonthDayAndHour + ".log";
+    }
 
+    @Override
+    protected void logImplementation(String message) {
         // Create or open a file
-        File logFile = new File(path);
+        File logFile = Paths.get(path).toFile();
         try {
             // if a file already exists it will do nothing
             logFile.createNewFile();

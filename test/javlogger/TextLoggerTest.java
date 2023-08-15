@@ -2,6 +2,7 @@ package test.javlogger;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.junit.Test;
 
@@ -14,15 +15,14 @@ public class TextLoggerTest extends TestCase {
     public void testTextLogger() {
         String testMsg = "Hi world!";
 
-        String tmpdir = System.getProperty("java.io.tmpdir");
-        String filePath = tmpdir + "/javlogger.log";
-        new File(filePath).delete();
+        String path = System.getProperty("java.io.tmpdir");
+        new File(path).delete();
 
-        TextLogger logger = new TextLogger(filePath);
+        TextLogger logger = new TextLogger(path);
         logger.log(testMsg);
 
         // Read file and assert they're equals
-        File file = new File(filePath);
+        File file = Paths.get(logger.getPath()).toFile();
         assertTrue(file.exists());
         assertTrue(file.isFile());
         assertTrue(file.canRead());

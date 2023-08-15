@@ -5,8 +5,7 @@ import javlogger.utils.JaVlogger;
 public class PromptLogger extends JaVlogger {
 
     @Override
-    public void log(String message) {
-        message = formatLog(message);
+    protected void logImplementation(String message) {
         System.out.println(message);
     }
 }
