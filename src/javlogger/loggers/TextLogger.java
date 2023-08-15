@@ -23,6 +23,7 @@ public class TextLogger extends JaVlogger {
 
     @Override
     public void log(String message) {
+        message = formatLog(message);
         if (path == null) {
             throw new RuntimeException("Path is not set");
         }

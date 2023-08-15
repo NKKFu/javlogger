@@ -3,10 +3,14 @@ package test.javlogger;
 import java.io.File;
 import java.nio.file.Files;
 
+import org.junit.Test;
+
 import javlogger.loggers.TextLogger;
 import junit.framework.TestCase;
 
 public class TextLoggerTest extends TestCase {
+
+    @Test
     public void testTextLogger() {
         String testMsg = "Hi world!";
 
@@ -25,7 +29,7 @@ public class TextLoggerTest extends TestCase {
 
         try {
             String content = new String(Files.readAllBytes(file.toPath()));
-            assertEquals(testMsg + "\n", content);
+            assertTrue(content.contains(testMsg));
         } catch (Exception e) {
             fail(e.getMessage());
         }
