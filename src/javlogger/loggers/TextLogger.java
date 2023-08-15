@@ -13,6 +13,9 @@ public class TextLogger extends JaVlogger {
     private String path = null;
 
     public TextLogger(String path) {
+        if (path == null) {
+            path = System.getProperty("java.io.tmpdir");
+        }
         this.path = Paths.get(path, getLoggerName()).toString();
     }
 
